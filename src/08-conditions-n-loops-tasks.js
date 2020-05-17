@@ -384,8 +384,15 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let result = '';
+  const pathesSplit = pathes.map((value) => value.split('/'));
+  result = pathesSplit[0]
+    .filter((value, index) => pathesSplit
+      .map((value2) => value2[index])
+      .every((item) => item === value));
+  result.push('');
+  return result.join('/');
 }
 
 /**
@@ -406,8 +413,20 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const result = [];
+  for (let i = 0; i < m1.length; i += 1) {
+    const lineArr = [];
+    for (let col = 0; col < m2[0].length; col += 1) {
+      let sum = 0;
+      for (let j = 0; j < m1[i].length; j += 1) {
+        sum += m1[i][j] * m2[j][col];
+      }
+      lineArr.push(sum);
+    }
+    result.push(lineArr);
+  }
+  return result;
 }
 
 /**
@@ -440,8 +459,23 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const isWinner = (char) => {
+    if ((position[0][0] === char && position[0][1] === char && position[0][2] === char)
+      || (position[1][0] === char && position[1][1] === char && position[1][2] === char)
+      || (position[2][0] === char && position[2][1] === char && position[2][2] === char)
+      || (position[0][0] === char && position[1][0] === char && position[2][0] === char)
+      || (position[1][1] === char && position[0][1] === char && position[2][1] === char)
+      || (position[0][2] === char && position[1][2] === char && position[2][2] === char)
+      || (position[0][0] === char && position[1][1] === char && position[2][2] === char)
+      || (position[0][2] === char && position[1][1] === char && position[2][0] === char)) {
+      return true;
+    }
+    return false;
+  };
+  if (isWinner('X')) return 'X';
+  if (isWinner('0')) return '0';
+  return undefined;
 }
 
 module.exports = {
